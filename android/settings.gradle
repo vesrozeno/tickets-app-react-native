@@ -1,4 +1,4 @@
-rootProject.name = 'ticketsappreactnative'
+rootProject.name = 'tickets-app-react-native'
 
 dependencyResolutionManagement {
   versionCatalogs {

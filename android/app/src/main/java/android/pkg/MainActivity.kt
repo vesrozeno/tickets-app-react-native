@@ -1,4 +1,4 @@
-package com.ticketsappreactnative
+package android.pkg
 
 import android.os.Build
 import android.os.Bundle
