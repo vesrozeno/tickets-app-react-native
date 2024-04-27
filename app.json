@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "tickets-app-react-native",
+    "slug": "tickets-app-react-native",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
