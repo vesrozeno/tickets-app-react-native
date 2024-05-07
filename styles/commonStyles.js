@@ -10,5 +10,15 @@ export default {
   // }
   container: {
     backgroundColor: "#1E1E1E",
+    flex: 1,
+    alignItems: "center",
+    // justifyContent: "center",
+  },
+  main_titles: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "white",
+    textAlign: "center",
+    marginTop: 55,
   },
 };
