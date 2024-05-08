@@ -1,3 +1,6 @@
+import { View } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 export default {
   // colors: {
   //     today: '#B13B44',
@@ -20,5 +23,10 @@ export default {
     color: "white",
     textAlign: "center",
     marginTop: 55,
+  },
+  header_style: {
+    backgroundColor: "#1E1E1E",
+    height: 150,
+    borderBottomLeftRadius: 50,
   },
 };

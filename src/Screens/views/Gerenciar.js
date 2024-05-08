@@ -1,12 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import commonStyles from "../../styles/commonStyles";
+import commonStyles from "../../../styles/commonStyles";
 
 export default (props) => {
   return (
     <View style={commonStyles.container}>
-      <Text style={commonStyles.main_titles}>HOME</Text>
+      <Text style={commonStyles.main_titles}></Text>
     </View>
   );
 };
