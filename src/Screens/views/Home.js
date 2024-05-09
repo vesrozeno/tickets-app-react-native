@@ -1,7 +1,7 @@
 import commonStyles from "../../../styles/commonStyles";
 import React, { useContext } from "react";
 import { Alert, FlatList, Text, View } from "react-native";
-import { ListItem, Avatar, Icon, Button } from "@rneui/themed";
+import { ListItem, Avatar, Icon, Button, Card } from "@rneui/themed";
 import TicketsContext from "../components/TicketsContext";
 
 export default (props) => {
@@ -9,17 +9,23 @@ export default (props) => {
 
   function getUsersItems({ item: evento }) {
     return (
-      <ListItem
-        onPress={() => props.navigation.navigate("Criar", evento)}
-        bottomDivider
-      >
-        <Avatar rounded source={{ uri: evento.avatarUrl }} />
-        <ListItem.Content>
-          <ListItem.Title>{evento.name}</ListItem.Title>
-          <ListItem.Subtitle>{evento.email}</ListItem.Subtitle>
-        </ListItem.Content>
-        {getActions(evento)}
-      </ListItem>
+      <Card containerStyle={commonStyles.card_style}>
+        <ListItem
+          onPress={() => props.navigation.navigate("Criar", evento)}
+          containerStyle={commonStyles.list_item_style}
+        >
+          <Avatar rounded source={{ uri: evento.avatarUrl }} />
+          <ListItem.Content>
+            <ListItem.Title style={commonStyles.card_titles}>
+              {evento.name}
+            </ListItem.Title>
+            <ListItem.Subtitle style={commonStyles.card_subtitles}>
+              {evento.email}
+            </ListItem.Subtitle>
+          </ListItem.Content>
+          {getActions(evento)}
+        </ListItem>
+      </Card>
     );
   }
 

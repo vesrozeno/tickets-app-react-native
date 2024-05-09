@@ -29,4 +29,31 @@ export default {
     height: 150,
     borderBottomLeftRadius: 50,
   },
+  card_style: {
+    borderRadius: 20,
+    // height: 175,
+    padding: 10,
+    backgroundColor: "#4D4848",
+    borderWidth: 0,
+  },
+  list_item_style: {
+    backgroundColor: "#696767",
+    borderRadius: 15,
+    height: 150,
+  },
+  edit_card_style: {
+    borderRadius: 20,
+    height: 413,
+    padding: 10,
+  },
+  card_titles: {
+    color: "white",
+    fontSize: 23,
+    fontWeight: "bold",
+  },
+  card_subtitles: {
+    color: "white",
+    fontSize: 12,
+    fontStyle: "italic",
+  },
 };

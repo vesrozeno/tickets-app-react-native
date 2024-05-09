@@ -123,7 +123,18 @@ export function GerenciarNavigation({ navigation }) {
         ),
       }}
     >
-      <Stack.Screen name="GerenciarStack" component={Gerenciar} />
+      <Stack.Screen
+        name="GerenciarStack"
+        component={Gerenciar}
+        options={{ title: "GERENCIAR" }}
+      />
+      <Stack.Screen
+        name="Criar"
+        component={Criar}
+        options={{
+          title: "EDITAR EVENTO",
+        }}
+      />
     </Stack.Navigator>
   );
 }
