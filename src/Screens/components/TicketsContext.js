@@ -29,7 +29,6 @@ const actions = {
     user.id = Math.random();
     const updatedEventos = [...state.eventos, user];
     saveEventos(updatedEventos);
-    console.log(updatedEventos);
     return {
       ...state,
       eventos: updatedEventos,
