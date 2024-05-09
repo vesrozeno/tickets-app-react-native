@@ -1,8 +1,7 @@
-import commonStyles from "../../../styles/commonStyles";
 import React, { useContext, useState } from "react";
 import { Button } from "@rneui/themed";
 import { TextInput, StyleSheet, View, Text } from "react-native";
-import TicketsContext from "../components/TicketsContext";
+import TicketsContext from "./TicketsContext";
 
 export default ({ route, navigation }) => {
   //console.warn(Object.keys(route.params))

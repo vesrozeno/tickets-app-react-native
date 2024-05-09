@@ -1,38 +1,37 @@
-import commonStyles from "../../../styles/commonStyles";
 import React, { useContext } from "react";
 import { Alert, FlatList, Text, View } from "react-native";
 import { ListItem, Avatar, Icon, Button } from "@rneui/themed";
-import TicketsContext from "../components/TicketsContext";
+import TicketsContext from "./TicketsContext";
 
 export default (props) => {
   const { state, dispatch } = useContext(TicketsContext);
 
-  function getUsersItems({ item: evento }) {
+  function getUsersItems({ item: user }) {
     return (
       <ListItem
-        onPress={() => props.navigation.navigate("Criar", evento)}
+        onPress={() => props.navigation.navigate("TicketsForm", user)}
         bottomDivider
       >
-        <Avatar rounded source={{ uri: evento.avatarUrl }} />
+        <Avatar rounded source={{ uri: user.avatarUrl }} />
         <ListItem.Content>
-          <ListItem.Title>{evento.name}</ListItem.Title>
-          <ListItem.Subtitle>{evento.email}</ListItem.Subtitle>
+          <ListItem.Title>{user.name}</ListItem.Title>
+          <ListItem.Subtitle>{user.email}</ListItem.Subtitle>
         </ListItem.Content>
-        {getActions(evento)}
+        {getActions(user)}
       </ListItem>
     );
   }
 
-  function getActions(evento) {
+  function getActions(user) {
     return (
       <>
         <Button
-          onPress={() => props.navigation.navigate("Criar", evento)}
+          onPress={() => props.navigation.navigate("TicketsForm", user)}
           type="clear"
           icon={<Icon name="edit" size={25} color="orange"></Icon>}
         />
         <Button
-          onPress={() => confirmUserDeletion(evento)}
+          onPress={() => confirmUserDeletion(user)}
           type="clear"
           icon={<Icon name="delete" size={25} color="red"></Icon>}
         />
@@ -40,15 +39,15 @@ export default (props) => {
     );
   }
 
-  function confirmUserDeletion(evento) {
+  function confirmUserDeletion(user) {
     Alert.alert("Excluir usuário", "Deseja excluir o usuário?", [
       {
         text: "Sim",
         onPress() {
           [
             dispatch({
-              type: "deletaEvento",
-              payload: evento,
+              type: "deleteEvento",
+              payload: user,
             }),
           ];
         },
@@ -62,8 +61,8 @@ export default (props) => {
   return (
     <View>
       <FlatList
-        keyExtractor={(evento) => evento.id.toString()}
-        data={state.eventos}
+        keyExtractor={(user) => user.id.toString()}
+        data={state.users}
         renderItem={getUsersItems}
       />
     </View>

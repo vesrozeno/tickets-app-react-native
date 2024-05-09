@@ -1,15 +1,14 @@
-import React from "react";
-import { View } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import React, { useContext } from "react";
+import { View, StyleSheet } from "react-native";
+import { Button, Icon } from "@rneui/themed";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeNavigationTabs from "./BottomTabs";
-
 import Home from "../Screens/views/Home";
 import Gerenciar from "../Screens/views/Gerenciar";
-import Criar from "../Screens/views/Criar";
 import commonStyles from "../../styles/commonStyles";
+import TicketsContext from "../Screens/components/TicketsContext";
+import Criar from "../Screens/views/Criar";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +39,18 @@ export function HomeNavigation({ navigation }) {
         ),
       }}
     >
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="HomeStack"
+        component={Home}
+        options={{ title: "HOME" }}
+      />
+      <Stack.Screen
+        name="Criar"
+        component={Criar}
+        options={{
+          title: "EDITAR EVENTO",
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -50,7 +60,7 @@ export function CriarNavigation({ navigation }) {
     <Stack.Navigator
       screenOptions={{
         headerShown: true,
-        title: "CRIAR EVENTO",
+        title: "CRIAR",
         headerLeft: () => (
           <View>
             <Ionicons
@@ -63,7 +73,34 @@ export function CriarNavigation({ navigation }) {
         ),
       }}
     >
-      <Stack.Screen name="Criar" component={Criar} />
+      <Stack.Screen
+        name="CriarStack"
+        component={Criar}
+        options={({ navigation }) => {
+          const { state, dispatch } = useContext(TicketsContext);
+          return {
+            title: "CRIAR EVENTO",
+            headerRight: () => (
+              <>
+                <Button
+                  onPress={() => navigation.navigate("Criar")}
+                  type="clear" // pode ser solid ou outline, nesse caso é sem fundo
+                  icon={<Icon name="add" size={25} color="black" />}
+                />
+                <Button
+                  onPress={() =>
+                    dispatch({
+                      type: "deleteAllEventos",
+                    })
+                  }
+                  type="clear" // pode ser solid ou outline, nesse caso é sem fundo
+                  icon={<Icon name="delete" size={25} color="black" />}
+                />
+              </>
+            ),
+          };
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -86,7 +123,25 @@ export function GerenciarNavigation({ navigation }) {
         ),
       }}
     >
-      <Stack.Screen name="Gerenciar" component={Gerenciar} />
+      <Stack.Screen name="GerenciarStack" component={Gerenciar} />
     </Stack.Navigator>
   );
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+const screenOptions = {
+  headerStyle: {
+    backgroundColor: "#f4511e",
+  },
+  headerTintColor: "#fff",
+  headerTitleStyle: {
+    fontWeight: "bold",
+  },
+};

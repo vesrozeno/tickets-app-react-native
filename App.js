@@ -6,11 +6,16 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Navigation from "./src/Navigation";
+import { EventosProvider } from "./src/Screens/components/TicketsContext";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
   const Drawer = createDrawerNavigator();
-  return <Navigation></Navigation>;
+  return (
+    <EventosProvider>
+      <Navigation></Navigation>
+    </EventosProvider>
+  );
 }
 
 const styles = StyleSheet.create({

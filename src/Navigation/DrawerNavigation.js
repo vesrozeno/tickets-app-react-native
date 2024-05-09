@@ -7,7 +7,7 @@ const Drawer = createDrawerNavigator();
 
 export default (props) => (
   <Drawer.Navigator screenOptions={{ headerShown: false, swipeEnabled: false }}>
-    <Drawer.Screen name="Home" component={StackNavigation} />
-    <Drawer.Screen name="Criar Evento" component={CriarNavigation} />
+    <Drawer.Screen name="HomeDrawer" component={StackNavigation} />
+    <Drawer.Screen name="CriarDrawer" component={CriarNavigation} />
   </Drawer.Navigator>
 );
