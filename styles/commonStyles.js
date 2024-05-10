@@ -39,7 +39,8 @@ export default {
   list_item_style: {
     backgroundColor: "#696767",
     borderRadius: 15,
-    height: 150,
+    height: 180,
+    padding: 0,
   },
   edit_card_style: {
     borderRadius: 20,
@@ -55,5 +56,50 @@ export default {
     color: "white",
     fontSize: 12,
     fontStyle: "italic",
+    padding: 2,
+  },
+  round_buttons: {
+    borderRadius: 100,
+    width: 50,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#0011A6",
+    margin: 2,
+  },
+  reserva_button: {
+    margin: 2,
+    borderRadius: 20,
+    width: 125,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#0011A6",
+  },
+  button_text: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "white",
+  },
+  card_container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+  image_container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 10,
+  },
+  avatar_image: {
+    width: 70,
+    height: 70,
+  },
+  edit_titles: {
+    fontStyle: "italic",
+    fontSize: 18,
+    marginLeft: 10,
   },
 };

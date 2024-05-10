@@ -1,7 +1,8 @@
 import commonStyles from "../../../styles/commonStyles";
 import React, { useContext } from "react";
 import { Alert, FlatList, Text, View } from "react-native";
-import { ListItem, Avatar, Icon, Button, Card } from "@rneui/themed";
+import { ListItem, Avatar, Button, Card } from "@rneui/themed";
+import Icon from "react-native-vector-icons/Ionicons";
 import TicketsContext from "../components/TicketsContext";
 
 export default (props) => {
@@ -15,15 +16,50 @@ export default (props) => {
           containerStyle={commonStyles.list_item_style}
         >
           <Avatar rounded source={{ uri: evento.avatarUrl }} />
-          <ListItem.Content>
-            <ListItem.Title style={commonStyles.card_titles}>
-              {evento.name}
-            </ListItem.Title>
-            <ListItem.Subtitle style={commonStyles.card_subtitles}>
-              {evento.email}
-            </ListItem.Subtitle>
-          </ListItem.Content>
-          {getActions(evento)}
+          <View style={commonStyles.card_container}>
+            <View>
+              <Text style={commonStyles.card_titles}>{evento.name}</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Icon name="location" size="10" color={"white"}></Icon>
+                <Text style={commonStyles.card_subtitles}>{evento.local}</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Icon name="calendar" size="10" color={"white"}></Icon>
+                <Text style={commonStyles.card_subtitles}>{evento.data}</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Icon name="time" size="10" color={"white"}></Icon>
+                <Text style={commonStyles.card_subtitles}>{evento.hora}</Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginBottom: 5,
+                flexDirection: "row",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Text style={commonStyles.card_subtitles}>
+                Ingressos disponíveis: {evento.qt}
+              </Text>
+            </View>
+            <View>{getActions(evento)}</View>
+          </View>
         </ListItem>
       </Card>
     );
@@ -31,18 +67,23 @@ export default (props) => {
 
   function getActions(evento) {
     return (
-      <>
+      <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
         <Button
           onPress={() => props.navigation.navigate("Criar", evento)}
           type="clear"
-          icon={<Icon name="edit" size={25} color="orange"></Icon>}
-        />
+          icon={<Icon name="cart" size={25} color="white"></Icon>}
+          style={commonStyles.reserva_button}
+        >
+          <Text style={commonStyles.button_text}>RESERVAR</Text>
+        </Button>
+
         <Button
           onPress={() => confirmUserDeletion(evento)}
           type="clear"
-          icon={<Icon name="delete" size={25} color="red"></Icon>}
+          icon={<Icon name="information-circle" size={30} color="white"></Icon>}
+          style={commonStyles.round_buttons}
         />
-      </>
+      </View>
     );
   }
 
