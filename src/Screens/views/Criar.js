@@ -1,6 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Button, Card, Input } from "@rneui/themed";
-import { TextInput, StyleSheet, View, Text, Image } from "react-native";
+import {
+  TextInput,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableHighlight,
+} from "react-native";
 import TicketsContext from "../components/TicketsContext";
 import commonStyles from "../../../styles/commonStyles";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -9,7 +16,6 @@ import avatar from "../../avatar";
 export default ({ route, navigation }) => {
   const [evento, setEvento] = useState(route.params ? route.params : {});
   const { dispatch } = useContext(TicketsContext);
-
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
@@ -42,106 +48,176 @@ export default ({ route, navigation }) => {
   };
 
   return (
-    <Card containerStyle={commonStyles.edit_card_style}>
-      <Text style={commonStyles.edit_titles}>Avatar:</Text>
-      <View style={commonStyles.image_container}>
-        {avatar.map((avatar, index) => (
-          <Image
-            style={commonStyles.avatar_image}
-            key={index}
-            source={{ uri: avatar }}
-          ></Image>
-        ))}
-        {/* <Image
+    <View style={commonStyles.container}>
+      <Card containerStyle={commonStyles.edit_card_style}>
+        <Text style={commonStyles.edit_titles}>Avatar:</Text>
+        <View style={commonStyles.image_container}>
+          {avatar.map((avatar, index) => (
+            <TouchableHighlight
+            // style={
+            //   pressed ? commonStyles.selected_image : commonStyles.avatar_image
+            // }
+            >
+              <Image
+                style={commonStyles.avatar_image}
+                key={index}
+                source={{ uri: avatar }}
+              ></Image>
+            </TouchableHighlight>
+          ))}
+          {/* <Image
           style={commonStyles.avatar_image}
           source={{ uri: avatar }}
         ></Image> */}
-      </View>
-      <Text>Nome</Text>
-      <TextInput
-        style={style.input}
-        onChangeText={(name) => setEvento({ ...evento, name })}
-        placeholder="Informe o nome"
-        value={evento.name}
-      />
-      <Text>Local</Text>
-      <TextInput
-        style={style.input}
-        onChangeText={(local) => setEvento({ ...evento, local })}
-        placeholder="Informe o local"
-        value={evento.local}
-      />
+        </View>
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          {/* <Text style={commonStyles.edit_titles}>Nome</Text> */}
+          <TextInput
+            style={commonStyles.input}
+            onChangeText={(name) => setEvento({ ...evento, name })}
+            placeholder="Informe o nome"
+            placeholderTextColor={"rgba(52, 52, 52, 0.8)"}
+            value={evento.name}
+          />
+          {/* <Text style={commonStyles.edit_titles}>Local</Text> */}
+          <TextInput
+            style={commonStyles.input}
+            onChangeText={(local) => setEvento({ ...evento, local })}
+            placeholder="Informe o local"
+            placeholderTextColor={"rgba(52, 52, 52, 0.8)"}
+            value={evento.local}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            type="clear"
+            icon={
+              <Icon
+                name="calendar"
+                size={25}
+                style={commonStyles.picker_icons}
+              ></Icon>
+            }
+            style={commonStyles.button_pick}
+            onPress={showDatePicker}
+          >
+            <Text style={commonStyles.create_titles}>
+              {evento.data == null ? "Data" : evento.data}
+            </Text>
+          </Button>
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            locale="pt_BR"
+            onConfirm={handleConfirmDate}
+            onCancel={hideDatePicker}
+            containerStyle={commonStyles.button_pick}
+          />
 
-      <Button
-        title={evento.data == null ? "Data do evento" : evento.data}
-        onPress={showDatePicker}
-      />
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        locale="pt_BR"
-        onConfirm={handleConfirmDate}
-        onCancel={hideDatePicker}
-      />
-
-      <Button
-        title={evento.hora == null ? "Horário" : evento.hora}
-        onPress={showTimePicker}
-      />
-      <DateTimePickerModal
-        isVisible={isTimePickerVisible}
-        mode="time"
-        onConfirm={handleConfirmTime}
-        onCancel={hideTimePicker}
-      />
-
-      <Text>Preço</Text>
-      <TextInput
-        style={style.input}
-        onChangeText={(valor) => setEvento({ ...evento, valor })}
-        placeholder="Informe o valor"
-        value={evento.valor}
-      />
-
-      <Text>Qt. disponível de ingressos</Text>
-      <TextInput
-        style={style.input}
-        onChangeText={(qt) => setEvento({ ...evento, qt })}
-        placeholder="Qt. disponível de ingressos"
-        value={evento.qt}
-      />
-      <Button
-        title="Salvar"
-        onPress={() => {
-          dispatch({
-            type: evento.id ? "updateEvento" : "criaEvento",
-            payload: evento,
-          });
-          navigation.goBack();
-        }}
-      />
-      <Button
-        title="Cancelar"
-        onPress={() => {
-          navigation.goBack();
-        }}
-      />
-    </Card>
+          <Button
+            icon={
+              <Icon
+                name="time"
+                size={25}
+                style={commonStyles.picker_icons}
+              ></Icon>
+            }
+            type="clear"
+            style={commonStyles.tiny_button_pick}
+            onPress={showTimePicker}
+          >
+            <Text style={commonStyles.create_titles}>
+              {evento.hora == null ? "Horário" : evento.hora}
+            </Text>
+          </Button>
+          <DateTimePickerModal
+            isVisible={isTimePickerVisible}
+            mode="time"
+            onConfirm={handleConfirmTime}
+            onCancel={hideTimePicker}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "column",
+              alignItems: "left",
+            }}
+          >
+            {/* <Text style={commonStyles.edit_titles}>Preço</Text> */}
+            <TextInput
+              style={commonStyles.tiny_input}
+              onChangeText={(valor) => setEvento({ ...evento, valor })}
+              placeholder="R$ Preço"
+              placeholderTextColor={"rgba(52, 52, 52, 0.8)"}
+              value={evento.valor}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: "column",
+              alignItems: "left",
+            }}
+          >
+            {/* <Text style={{ ...commonStyles.edit_titles, fontSize: 14 }}>
+            Ingressos disponíveis
+          </Text> */}
+            <TextInput
+              style={commonStyles.tiny_input}
+              onChangeText={(qt) => setEvento({ ...evento, qt })}
+              placeholder="nº Ingressos"
+              placeholderTextColor={"rgba(52, 52, 52, 0.8)"}
+              value={evento.qt}
+            />
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            style={commonStyles.big_button}
+            type="clear"
+            onPress={() => {
+              dispatch({
+                type: evento.id ? "updateEvento" : "criaEvento",
+                payload: evento,
+              });
+              navigation.goBack();
+            }}
+          >
+            <Text style={commonStyles.button_titles}>Confirmar</Text>
+          </Button>
+          <Button
+            style={commonStyles.big_button}
+            type="clear"
+            title="Cancelar"
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Text style={commonStyles.button_titles}>Cancelar</Text>
+          </Button>
+        </View>
+      </Card>
+    </View>
   );
 };
-
-const style = StyleSheet.create({
-  input: {
-    height: 40,
-    width: 310,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 10,
-    borderRadius: 20,
-    textAlign: "center",
-    fontSize: 18,
-  },
-  form: {
-    padding: 15,
-  },
-});

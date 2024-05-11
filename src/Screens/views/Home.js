@@ -15,7 +15,7 @@ export default (props) => {
           onPress={() => props.navigation.navigate("Criar", evento)}
           containerStyle={commonStyles.list_item_style}
         >
-          <Avatar rounded source={{ uri: evento.avatarUrl }} />
+          <Avatar rounded source={{ uri: evento.avatar }} />
           <View style={commonStyles.card_container}>
             <View>
               <Text style={commonStyles.card_titles}>{evento.name}</Text>
@@ -107,7 +107,7 @@ export default (props) => {
   }
 
   return (
-    <View>
+    <View style={commonStyles.container}>
       <FlatList
         keyExtractor={(evento) => evento.id.toString()}
         data={state.eventos}

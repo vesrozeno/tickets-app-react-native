@@ -32,7 +32,7 @@ export function HomeNavigation({ navigation }) {
             <Ionicons
               name="menu"
               size={35}
-              color={"#000"}
+              color={"#FFF"}
               onPress={() => navigation.openDrawer()}
             />
           </View>
@@ -42,13 +42,33 @@ export function HomeNavigation({ navigation }) {
       <Stack.Screen
         name="HomeStack"
         component={Home}
-        options={{ title: "HOME" }}
+        options={{
+          headerShadowVisible: false,
+          headerBackTitleVisible: false,
+          title: "HOME",
+          headerStyle: {
+            backgroundColor: "#1E1E1E",
+          },
+          headerTitleStyle: {
+            fontSize: 26,
+            color: "white",
+          },
+        }}
       />
       <Stack.Screen
         name="Criar"
         component={Criar}
         options={{
+          headerShadowVisible: false,
+          headerBackTitleVisible: false,
           title: "EDITAR EVENTO",
+          headerStyle: {
+            backgroundColor: "#1E1E1E",
+          },
+          headerTitleStyle: {
+            fontSize: 26,
+            color: "white",
+          },
         }}
       />
     </Stack.Navigator>
@@ -109,14 +129,12 @@ export function GerenciarNavigation({ navigation }) {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: true,
-        title: "GERENCIAR",
         headerLeft: () => (
           <View>
             <Ionicons
               name="menu"
               size={35}
-              color={"#000"}
+              color={"white"}
               onPress={() => navigation.openDrawer()}
             />
           </View>
@@ -126,33 +144,35 @@ export function GerenciarNavigation({ navigation }) {
       <Stack.Screen
         name="GerenciarStack"
         component={Gerenciar}
-        options={{ title: "GERENCIAR" }}
+        options={{
+          headerShadowVisible: false,
+          headerBackTitleVisible: false,
+          title: "GERENCIAR",
+          headerStyle: {
+            backgroundColor: "#1E1E1E",
+          },
+          headerTitleStyle: {
+            fontSize: 26,
+            color: "white",
+          },
+        }}
       />
       <Stack.Screen
         name="Criar"
         component={Criar}
         options={{
+          headerShadowVisible: false,
+          headerBackTitleVisible: false,
           title: "EDITAR EVENTO",
+          headerStyle: {
+            backgroundColor: "#1E1E1E",
+          },
+          headerTitleStyle: {
+            fontSize: 26,
+            color: "white",
+          },
         }}
       />
     </Stack.Navigator>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
-
-const screenOptions = {
-  headerStyle: {
-    backgroundColor: "#f4511e",
-  },
-  headerTintColor: "#fff",
-  headerTitleStyle: {
-    fontWeight: "bold",
-  },
-};
