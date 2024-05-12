@@ -1,18 +1,12 @@
 import React, { useContext, useState } from "react";
-import { Button, Card, Input } from "@rneui/themed";
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableHighlight,
-} from "react-native";
+import { Button, Card } from "@rneui/themed";
+import { TextInput, View, Text, Image } from "react-native";
 import TicketsContext from "../components/TicketsContext";
 import commonStyles from "../../../styles/commonStyles";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from "react-native-vector-icons/Ionicons";
-import avatar from "../../avatar";
+import avatarteste from "../../avatarteste";
+
 export default ({ route, navigation }) => {
   const [evento, setEvento] = useState(route.params ? route.params : {});
   const { dispatch } = useContext(TicketsContext);
@@ -52,18 +46,12 @@ export default ({ route, navigation }) => {
       <Card containerStyle={commonStyles.edit_card_style}>
         <Text style={commonStyles.edit_titles}>Avatar:</Text>
         <View style={commonStyles.image_container}>
-          {avatar.map((avatar, index) => (
-            <TouchableHighlight
-            // style={
-            //   pressed ? commonStyles.selected_image : commonStyles.avatar_image
-            // }
-            >
-              <Image
-                style={commonStyles.avatar_image}
-                key={index}
-                source={{ uri: avatar }}
-              ></Image>
-            </TouchableHighlight>
+          {avatarteste.map((avatar, index) => (
+            <Image
+              style={commonStyles.avatar_image}
+              key={index}
+              source={{ uri: avatar }}
+            ></Image>
           ))}
           {/* <Image
           style={commonStyles.avatar_image}

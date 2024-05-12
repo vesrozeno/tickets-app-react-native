@@ -31,7 +31,6 @@ export default {
   },
   card_style: {
     borderRadius: 20,
-    // height: 175,
     padding: 10,
     backgroundColor: "#4D4848",
     borderWidth: 0,
@@ -45,7 +44,6 @@ export default {
   edit_card_style: {
     borderRadius: 20,
     height: 420,
-    padding: 10,
     backgroundColor: "#696767",
     borderWidth: 0,
   },
@@ -85,8 +83,6 @@ export default {
   },
   card_container: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
     padding: 10,
   },
   image_container: {
@@ -98,6 +94,13 @@ export default {
   avatar_image: {
     width: 70,
     height: 70,
+  },
+  avatar_image_display: {
+    width: 70,
+    height: 70,
+    marginRight: 10,
+    borderWidth: 3,
+    borderColor: "white",
   },
   edit_titles: {
     fontStyle: "italic",

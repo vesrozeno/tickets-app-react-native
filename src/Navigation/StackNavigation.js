@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
-import { View, StyleSheet } from "react-native";
-import { Button, Icon } from "@rneui/themed";
+import React from "react";
+import { View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeNavigationTabs from "./BottomTabs";
 import Home from "../Screens/views/Home";
 import Gerenciar from "../Screens/views/Gerenciar";
-import commonStyles from "../../styles/commonStyles";
-import TicketsContext from "../Screens/components/TicketsContext";
 import Criar from "../Screens/views/Criar";
+import Reservar from "../Screens/views/Reservar";
+import Status from "../Screens/views/Status";
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +70,38 @@ export function HomeNavigation({ navigation }) {
           },
         }}
       />
+      <Stack.Screen
+        name="Reservar"
+        component={Reservar}
+        options={{
+          headerShadowVisible: false,
+          headerBackTitleVisible: false,
+          title: "RESERVAR",
+          headerStyle: {
+            backgroundColor: "#1E1E1E",
+          },
+          headerTitleStyle: {
+            fontSize: 26,
+            color: "white",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Status"
+        component={Status}
+        options={{
+          headerShadowVisible: false,
+          headerBackTitleVisible: false,
+          title: "STATUS",
+          headerStyle: {
+            backgroundColor: "#1E1E1E",
+          },
+          headerTitleStyle: {
+            fontSize: 26,
+            color: "white",
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -86,7 +117,7 @@ export function CriarNavigation({ navigation }) {
             <Ionicons
               name="arrow-back"
               size={35}
-              color={"#000"}
+              color={"#FFF"}
               onPress={() => navigation.goBack()}
             />
           </View>
@@ -96,29 +127,17 @@ export function CriarNavigation({ navigation }) {
       <Stack.Screen
         name="CriarStack"
         component={Criar}
-        options={({ navigation }) => {
-          const { state, dispatch } = useContext(TicketsContext);
-          return {
-            title: "CRIAR EVENTO",
-            headerRight: () => (
-              <>
-                <Button
-                  onPress={() => navigation.navigate("Criar")}
-                  type="clear" // pode ser solid ou outline, nesse caso é sem fundo
-                  icon={<Icon name="add" size={25} color="black" />}
-                />
-                <Button
-                  onPress={() =>
-                    dispatch({
-                      type: "deleteAllEventos",
-                    })
-                  }
-                  type="clear" // pode ser solid ou outline, nesse caso é sem fundo
-                  icon={<Icon name="delete" size={25} color="black" />}
-                />
-              </>
-            ),
-          };
+        options={{
+          headerShadowVisible: false,
+          headerBackTitleVisible: false,
+          title: "CRIAR",
+          headerStyle: {
+            backgroundColor: "#1E1E1E",
+          },
+          headerTitleStyle: {
+            fontSize: 26,
+            color: "white",
+          },
         }}
       />
     </Stack.Navigator>
