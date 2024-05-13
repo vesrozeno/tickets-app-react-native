@@ -38,12 +38,12 @@ export default {
   list_item_style: {
     backgroundColor: "#696767",
     borderRadius: 15,
-    height: 180,
+    height: 200,
     padding: 0,
   },
   edit_card_style: {
     borderRadius: 20,
-    height: 420,
+    height: 480,
     backgroundColor: "#696767",
     borderWidth: 0,
   },

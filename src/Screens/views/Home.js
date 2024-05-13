@@ -12,10 +12,7 @@ export default (props) => {
   function getUsersItems({ item: evento }) {
     return (
       <Card containerStyle={commonStyles.card_style}>
-        <ListItem
-          onPress={() => props.navigation.navigate("Criar", evento)}
-          containerStyle={commonStyles.list_item_style}
-        >
+        <ListItem containerStyle={commonStyles.list_item_style}>
           <View style={commonStyles.card_container}>
             <View>
               <View

@@ -1,5 +1,4 @@
 import React, { createContext, useReducer, useEffect } from "react";
-// import eventos from "./eventos";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const TicketsContext = createContext({});
@@ -22,6 +21,21 @@ const actions = {
       ...state, //opcional no caso de 1 estado, se tiver mais estados precisa clonalos com essa linha
       eventos: updatedEventos,
     }; //estado é evoluido
+  },
+
+  favoritaEvento(state, action) {
+    const user = action.payload;
+
+    user.favorito = !user.favorito;
+
+    const updatedEventos = state.eventos.map((u) =>
+      u.id === user.id ? user : u
+    );
+    saveEventos(updatedEventos);
+    return {
+      ...state,
+      eventos: updatedEventos,
+    };
   },
 
   criaEvento(state, action) {

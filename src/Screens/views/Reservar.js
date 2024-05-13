@@ -1,14 +1,32 @@
 import React, { useContext, useState } from "react";
 import { Button, Card, Avatar } from "@rneui/themed";
-import { TextInput, View, Text } from "react-native";
+import { TextInput, View, Text, FlatList } from "react-native";
 import TicketsContext from "../components/TicketsContext";
 import commonStyles from "../../../styles/commonStyles";
 import Icon from "react-native-vector-icons/Ionicons";
 import avatar from "../../avatar";
+import AddReserva from "../components/AddReserva";
 export default ({ route, navigation }) => {
-  const [evento, setEvento] = useState(route.params ? route.params : {});
+  const [evento, setEvento] = useState(
+    route.params ? route.params : { ...evento, reservas: [] }
+  );
   const { dispatch } = useContext(TicketsContext);
-
+  const excluirReserva = (index) => {
+    const novasReservas = [...evento.reservas];
+    const retornados = novasReservas.splice(index, 1);
+    //console.warn(retornados)
+    console.warn(novasReservas.splice(index, 1));
+    //console.warn(retornados)
+    setEvento({
+      ...evento,
+      reservas: novasReservas,
+    });
+    //console.warn(evento.reservas)
+    dispatch({
+      type: "updateEvento",
+      payload: evento,
+    });
+  };
   return (
     <View style={commonStyles.container}>
       <Card containerStyle={commonStyles.edit_card_style}>
@@ -75,60 +93,31 @@ export default ({ route, navigation }) => {
             </View>
           </View>
         </View>
-        <View style={{}}>
-          <View
-            style={{
-              alignItems: "center",
-            }}
-          >
-            {/* <Text style={commonStyles.edit_titles}>Nome</Text> */}
-            <TextInput
-              style={commonStyles.input}
-              onChangeText={(name) => setEvento({ ...evento, name })}
-              placeholder="Informe o nome"
-              placeholderTextColor={"rgba(52, 52, 52, 0.8)"}
-              value={evento.name}
-            />
-            {/* <Text style={commonStyles.edit_titles}>Local</Text> */}
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          ></View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <Button
-              style={commonStyles.big_button}
-              type="clear"
-              onPress={() => {
-                dispatch({
-                  type: evento.id ? "updateEvento" : "criaEvento",
-                  payload: evento,
-                });
-                navigation.goBack();
-              }}
-            >
-              <Text style={commonStyles.button_titles}>Confirmar</Text>
-            </Button>
-            <Button
-              style={commonStyles.big_button}
-              type="clear"
-              title="Cancelar"
-              onPress={() => {
-                navigation.goBack();
-              }}
-            >
-              <Text style={commonStyles.button_titles}>Cancelar</Text>
-            </Button>
-          </View>
-        </View>
+        <AddReserva
+          evento={evento}
+          setEvento={setEvento}
+          navigation={navigation}
+        />
+        {evento.reservas != undefined && (
+          <FlatList
+            data={evento.reservas.reduce((acc, item) => acc.concat(item), [])}
+            renderItem={({ item, index }) => (
+              <View style={{ flexDirection: "row", margin: 10 }}>
+                <View style={{ flex: 5 }}>
+                  <Text>Nome: {item.cliente}</Text>
+                  <Text>Quantidade de ingressos: {item.ings}</Text>
+                </View>
+                <IconButton
+                  style={{ flex: 1 }}
+                  icon="delete"
+                  iconColor="red"
+                  onPress={() => excluirReserva(index)}
+                />
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        )}
       </Card>
     </View>
   );

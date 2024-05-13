@@ -10,7 +10,11 @@ export default ({ route, navigation }) => {
   return (
     <View style={commonStyles.container}>
       <Card containerStyle={commonStyles.edit_card_style}>
-        <View>
+        <View
+          style={{
+            flexDirection: "column",
+          }}
+        >
           <View style={{ flexDirection: "row" }}>
             <View>
               <Avatar
@@ -26,15 +30,6 @@ export default ({ route, navigation }) => {
                 }}
               >
                 <Text style={commonStyles.card_titles}>{evento.name}</Text>
-                <Text
-                  style={{
-                    ...commonStyles.card_subtitles,
-                    fontSize: 18,
-                    marginLeft: 90,
-                  }}
-                >
-                  R${evento.valor}
-                </Text>
               </View>
               <View
                 style={{
@@ -63,17 +58,25 @@ export default ({ route, navigation }) => {
                 <Icon name="time" size="10" color={"white"}></Icon>
                 <Text style={commonStyles.card_subtitles}>{evento.hora}</Text>
               </View>
-              <View
-                style={{
-                  marginBottom: 5,
-                  flexDirection: "row",
-                }}
-              >
-                <Text style={commonStyles.card_subtitles}>
-                  Ingressos disponíveis: {evento.qt}
-                </Text>
-              </View>
             </View>
+          </View>
+          <View
+            style={{
+              alignItems: "flex-start",
+            }}
+          >
+            <Text style={commonStyles.card_subtitles}>
+              Ingressos disponíveis: {evento.qt}
+            </Text>
+            <Text
+              style={{
+                ...commonStyles.card_subtitles,
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              R${evento.valor}
+            </Text>
           </View>
         </View>
       </Card>

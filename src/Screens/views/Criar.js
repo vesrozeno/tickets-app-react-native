@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Card } from "@rneui/themed";
+import { Button, Card, Switch } from "@rneui/themed";
 import { TextInput, View, Text, Image } from "react-native";
 import TicketsContext from "../components/TicketsContext";
 import commonStyles from "../../../styles/commonStyles";
@@ -8,7 +8,9 @@ import Icon from "react-native-vector-icons/Ionicons";
 import avatarteste from "../../avatarteste";
 
 export default ({ route, navigation }) => {
-  const [evento, setEvento] = useState(route.params ? route.params : {});
+  const [evento, setEvento] = useState(
+    route.params ? route.params : { ...evento, favorito: false }
+  );
   const { dispatch } = useContext(TicketsContext);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
@@ -39,6 +41,10 @@ export default ({ route, navigation }) => {
     hora = time.getHours() + ":" + time.getMinutes();
     setEvento({ ...evento, hora });
     hideTimePicker();
+  };
+
+  const toggleSwitch = () => {
+    setEvento({ ...evento, favorito: !evento.favorito });
   };
 
   return (
@@ -163,9 +169,6 @@ export default ({ route, navigation }) => {
               alignItems: "left",
             }}
           >
-            {/* <Text style={{ ...commonStyles.edit_titles, fontSize: 14 }}>
-            Ingressos disponíveis
-          </Text> */}
             <TextInput
               style={commonStyles.tiny_input}
               onChangeText={(qt) => setEvento({ ...evento, qt })}
@@ -174,6 +177,23 @@ export default ({ route, navigation }) => {
               value={evento.qt}
             />
           </View>
+        </View>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            padding: 10,
+          }}
+        >
+          <Text style={{ ...commonStyles.edit_titles, marginRight: 15 }}>
+            Favorito:
+          </Text>
+          <Switch
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={evento.favorito}
+          ></Switch>
         </View>
         <View
           style={{

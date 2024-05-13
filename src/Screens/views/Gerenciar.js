@@ -27,22 +27,8 @@ export default (props) => {
                 />
               </View>
               <View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
+                <View>
                   <Text style={commonStyles.card_titles}>{evento.name}</Text>
-                  <Text
-                    style={{
-                      ...commonStyles.card_subtitles,
-                      fontSize: 18,
-                      marginLeft: 90,
-                    }}
-                  >
-                    R${evento.valor}
-                  </Text>
                 </View>
                 <View
                   style={{
@@ -77,13 +63,21 @@ export default (props) => {
             </View>
             <View
               style={{
-                marginBottom: 5,
-                flexDirection: "row",
-                justifyContent: "flex-end",
+                flexDirection: "column",
+                alignItems: "flex-start",
               }}
             >
               <Text style={commonStyles.card_subtitles}>
                 Ingressos disponíveis: {evento.qt}
+              </Text>
+              <Text
+                style={{
+                  ...commonStyles.card_subtitles,
+                  fontWeight: "bold",
+                  fontSize: 16,
+                }}
+              >
+                R${evento.valor}
               </Text>
             </View>
             <View>{getActions(evento)}</View>
@@ -97,9 +91,22 @@ export default (props) => {
     return (
       <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
         <Button
-          onPress={() => props.navigation.navigate("Criar", evento)}
+          onPress={() => {
+            [
+              dispatch({
+                type: "favoritaEvento",
+                payload: evento,
+              }),
+            ];
+          }}
           type="clear"
-          icon={<Icon name="star" size={25} color="white"></Icon>}
+          icon={
+            <Icon
+              name="star"
+              size={25}
+              color={evento.favorito ? "yellow" : "white"}
+            ></Icon>
+          }
           style={commonStyles.round_buttons}
         ></Button>
         <Button
