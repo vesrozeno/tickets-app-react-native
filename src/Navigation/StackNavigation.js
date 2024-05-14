@@ -8,7 +8,6 @@ import Gerenciar from "../Screens/views/Gerenciar";
 import Criar from "../Screens/views/Criar";
 import Reservar from "../Screens/views/Reservar";
 import Status from "../Screens/views/Status";
-import TaskList from "../test/TaskList";
 
 const Stack = createNativeStackNavigator();
 
@@ -88,22 +87,6 @@ export function HomeNavigation({ navigation }) {
         }}
       />
       <Stack.Screen
-        name="Task"
-        component={TaskList}
-        options={{
-          headerShadowVisible: false,
-          headerBackTitleVisible: false,
-          title: "tasks",
-          headerStyle: {
-            backgroundColor: "#1E1E1E",
-          },
-          headerTitleStyle: {
-            fontSize: 26,
-            color: "white",
-          },
-        }}
-      />
-      <Stack.Screen
         name="Status"
         component={Status}
         options={{
@@ -147,6 +130,7 @@ export function CriarNavigation({ navigation }) {
         options={{
           headerShadowVisible: false,
           headerBackTitleVisible: false,
+          unmountOnBlur: true,
           title: "CRIAR",
           headerStyle: {
             backgroundColor: "#1E1E1E",

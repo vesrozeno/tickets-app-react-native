@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import covers from "../../covers";
 
 const TicketsContext = createContext({});
 const initialState = { eventos: [] };
@@ -41,6 +42,9 @@ const actions = {
   criaEvento(state, action) {
     const user = action.payload;
     user.id = Math.random();
+    user.reservas = [];
+    user.favorito = false;
+    user.avatar = covers[Math.floor(Math.random() * avatars.length)];
     const updatedEventos = [...state.eventos, user];
     saveEventos(updatedEventos);
     return {

@@ -1,85 +1,111 @@
-import React, { useState } from "react";
-import { Card, Avatar } from "@rneui/themed";
-import { View, Text } from "react-native";
+import React, { useState, useContext } from "react";
+import { Card, Button } from "@rneui/themed";
+import { View, Text, ScrollView } from "react-native";
 import commonStyles from "../../../styles/commonStyles";
 import Icon from "react-native-vector-icons/Ionicons";
-import avatar from "../../avatar";
-export default ({ route, navigation }) => {
+import TicketsContext from "../components/TicketsContext";
+import SmallCard from "../components/SmallCard";
+
+export default ({ route }) => {
+  //States e Context
   const [evento, setEvento] = useState(route.params ? route.params : {});
+  const { dispatch } = useContext(TicketsContext);
+
+  //Função para excluir reserva
+  const excluirReserva = (item) => {
+    const novasReservas = evento.reservas.filter((i) => i !== item);
+    setEvento({
+      ...evento,
+      reservas: novasReservas,
+      qt: evento.qt + item.ings,
+    });
+    dispatch({
+      type: "updateEvento",
+      payload: {
+        ...evento,
+        reservas: novasReservas,
+        qt: evento.qt + item.ings,
+      },
+    });
+  };
 
   return (
-    <View style={commonStyles.container}>
-      <Card containerStyle={commonStyles.edit_card_style}>
-        <View
-          style={{
-            flexDirection: "column",
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <View>
-              <Avatar
-                style={commonStyles.avatar_image_display}
-                source={{ uri: avatar }}
-              />
-            </View>
-            <View>
-              <View
-                style={{
+    <SmallCard
+      style={
+        evento.reservas == 0
+          ? commonStyles.edit_card_style
+          : commonStyles.list_edit_card_styles
+      }
+      evento={evento}
+      getActions={getActions}
+    ></SmallCard>
+  );
+
+  function getActions(evento) {
+    return (
+      <ScrollView>
+        {evento.reservas == 0 ? (
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#fff",
+              fontWeight: "bold",
+            }}
+          >
+            Ainda não há reservas para esse evento.
+          </Text>
+        ) : (
+          evento.reservas.map((item, index) => (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Card
+                containerStyle={{
+                  borderRadius: 20,
+                  backgroundColor: "#0011A6",
+                  borderWidth: 0,
+                  width: 210,
+                  height: 60,
+                }}
+                wrapperStyle={{
                   flexDirection: "row",
+                  alignItems: "center",
                   justifyContent: "space-between",
                 }}
               >
-                <Text style={commonStyles.card_titles}>{evento.name}</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Icon name="location" size="10" color={"white"}></Icon>
-                <Text style={commonStyles.card_subtitles}>{evento.local}</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Icon name="calendar" size="10" color={"white"}></Icon>
-                <Text style={commonStyles.card_subtitles}>{evento.data}</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Icon name="time" size="10" color={"white"}></Icon>
-                <Text style={commonStyles.card_subtitles}>{evento.hora}</Text>
+                <Text style={{ ...commonStyles.edit_titles, fontSize: 14 }}>
+                  {item.cliente}
+                </Text>
+
+                <Icon
+                  name="ticket"
+                  size={15}
+                  color="#fff"
+                  style={{
+                    borderWidth: 2,
+                    borderColor: "#fff",
+                    borderRadius: 10,
+                    padding: 2,
+                  }}
+                >
+                  {item.ings}
+                </Icon>
+              </Card>
+              <View style={{ flexDirection: "row", marginTop: 10 }}>
+                <Button
+                  type="clear"
+                  icon={<Icon name="trash" size={20} color="white"></Icon>}
+                  style={commonStyles.tiny_round_buttons}
+                  onPress={() => excluirReserva(item)}
+                />
               </View>
             </View>
-          </View>
-          <View
-            style={{
-              alignItems: "flex-start",
-            }}
-          >
-            <Text style={commonStyles.card_subtitles}>
-              Ingressos disponíveis: {evento.qt}
-            </Text>
-            <Text
-              style={{
-                ...commonStyles.card_subtitles,
-                fontSize: 18,
-                fontWeight: "bold",
-              }}
-            >
-              R${evento.valor}
-            </Text>
-          </View>
-        </View>
-      </Card>
-    </View>
-  );
+          ))
+        )}
+      </ScrollView>
+    );
+  }
 };

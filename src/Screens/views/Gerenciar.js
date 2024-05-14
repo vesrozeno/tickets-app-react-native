@@ -5,91 +5,28 @@ import { ListItem, Avatar, Button, Card, SearchBar } from "@rneui/themed";
 import Icon from "react-native-vector-icons/Ionicons";
 import TicketsContext from "../components/TicketsContext";
 import avatar from "../../avatar";
+import BigCard from "../components/BigCard";
 
 export default (props) => {
   const { state, dispatch } = useContext(TicketsContext);
-  const [search, setSearch] = useState("");
 
-  const updateSearch = (search) => {
-    setSearch(search);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const onChangeSearch = (query) => {
+    setSearchQuery(query);
   };
 
+  const filteredEvents = state.eventos.filter((event) =>
+    event.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   function getUsersItems({ item: evento }) {
-    return (
-      <Card containerStyle={commonStyles.card_style}>
-        <ListItem containerStyle={commonStyles.list_item_style}>
-          <View style={commonStyles.card_container}>
-            <View style={{ flexDirection: "row" }}>
-              <View>
-                <Avatar
-                  style={commonStyles.avatar_image_display}
-                  source={{ uri: avatar }}
-                />
-              </View>
-              <View>
-                <View>
-                  <Text style={commonStyles.card_titles}>{evento.name}</Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
-                  <Icon name="location" size="10" color={"white"}></Icon>
-                  <Text style={commonStyles.card_subtitles}>
-                    {evento.local}
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
-                  <Icon name="calendar" size="10" color={"white"}></Icon>
-                  <Text style={commonStyles.card_subtitles}>{evento.data}</Text>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
-                  <Icon name="time" size="10" color={"white"}></Icon>
-                  <Text style={commonStyles.card_subtitles}>{evento.hora}</Text>
-                </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: "column",
-                alignItems: "flex-start",
-              }}
-            >
-              <Text style={commonStyles.card_subtitles}>
-                Ingressos disponíveis: {evento.qt}
-              </Text>
-              <Text
-                style={{
-                  ...commonStyles.card_subtitles,
-                  fontWeight: "bold",
-                  fontSize: 16,
-                }}
-              >
-                R${evento.valor}
-              </Text>
-            </View>
-            <View>{getActions(evento)}</View>
-          </View>
-        </ListItem>
-      </Card>
-    );
+    return <BigCard evento={evento} getActions={getActions}></BigCard>;
   }
 
   function getActions(evento) {
     return (
-      <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+      <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <Button
           onPress={() => {
             [
@@ -173,8 +110,8 @@ export default (props) => {
       >
         <SearchBar
           placeholder="Procure eventos"
-          onChangeText={updateSearch}
-          value={search}
+          onChangeText={onChangeSearch}
+          value={searchQuery}
           lightTheme={true}
           round={true}
           containerStyle={{
@@ -200,7 +137,7 @@ export default (props) => {
       </View>
       <FlatList
         keyExtractor={(evento) => evento.id.toString()}
-        data={state.eventos}
+        data={filteredEvents}
         renderItem={getUsersItems}
       />
     </View>

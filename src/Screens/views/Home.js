@@ -1,91 +1,25 @@
 import commonStyles from "../../../styles/commonStyles";
 import React, { useContext } from "react";
-import { Alert, FlatList, Text, View } from "react-native";
-import { ListItem, Avatar, Button, Card } from "@rneui/themed";
+import { FlatList, Text, View } from "react-native";
+import { Button } from "@rneui/themed";
 import Icon from "react-native-vector-icons/Ionicons";
 import TicketsContext from "../components/TicketsContext";
-import avatar from "../../avatar";
+import BigCard from "../components/BigCard";
 
 export default (props) => {
   const { state, dispatch } = useContext(TicketsContext);
 
+  const favoriteEvents = state.eventos.filter((evento) => evento.favorito);
+  const otherEvents = state.eventos.filter((evento) => !evento.favorito);
+  const mergedEvents = [...favoriteEvents, ...otherEvents];
+
   function getUsersItems({ item: evento }) {
-    return (
-      <Card containerStyle={commonStyles.card_style}>
-        <ListItem containerStyle={commonStyles.list_item_style}>
-          <View style={commonStyles.card_container}>
-            <View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "left",
-                  alignItems: "center",
-                }}
-              >
-                {/* <Avatar rounded source={{ uri: evento.avatar }} /> */}
-                <Avatar
-                  style={commonStyles.avatar_image_display}
-                  source={{ uri: avatar }}
-                />
-                <View>
-                  <Text style={commonStyles.card_titles}>{evento.name}</Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Icon name="location" size="10" color={"white"}></Icon>
-                    <Text style={commonStyles.card_subtitles}>
-                      {evento.local}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Icon name="calendar" size="10" color={"white"}></Icon>
-                    <Text style={commonStyles.card_subtitles}>
-                      {evento.data}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Icon name="time" size="10" color={"white"}></Icon>
-                    <Text style={commonStyles.card_subtitles}>
-                      {evento.hora}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={{
-                  marginBottom: 5,
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <Text style={commonStyles.card_subtitles}>
-                  Ingressos disponíveis: {evento.qt}
-                </Text>
-              </View>
-              <View>{getActions(evento)}</View>
-            </View>
-          </View>
-        </ListItem>
-      </Card>
-    );
+    return <BigCard evento={evento} getActions={getActions}></BigCard>;
   }
 
   function getActions(evento) {
     return (
-      <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+      <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <Button
           onPress={() => props.navigation.navigate("Reservar", evento)}
           type="clear"
@@ -105,30 +39,11 @@ export default (props) => {
     );
   }
 
-  function confirmUserDeletion(evento) {
-    Alert.alert("Excluir usuário", "Deseja excluir o usuário?", [
-      {
-        text: "Sim",
-        onPress() {
-          [
-            dispatch({
-              type: "deletaEvento",
-              payload: evento,
-            }),
-          ];
-        },
-      },
-      {
-        text: "Não",
-      },
-    ]);
-  }
-
   return (
     <View style={commonStyles.container}>
       <FlatList
         keyExtractor={(evento) => evento.id.toString()}
-        data={state.eventos}
+        data={mergedEvents}
         renderItem={getUsersItems}
       />
     </View>

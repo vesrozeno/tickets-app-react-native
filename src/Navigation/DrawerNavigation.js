@@ -22,6 +22,10 @@ export default (props) => (
     }}
   >
     <Drawer.Screen name="Ir para o início" component={StackNavigation} />
-    <Drawer.Screen name="Criar novo evento" component={CriarNavigation} />
+    <Drawer.Screen
+      name="Criar novo evento"
+      component={CriarNavigation}
+      options={{ unmountOnBlur: true }}
+    />
   </Drawer.Navigator>
 );

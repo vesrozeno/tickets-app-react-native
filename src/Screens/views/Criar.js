@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Button, Card, Switch } from "@rneui/themed";
-import { TextInput, View, Text, Image } from "react-native";
+import { TextInput, View, Text, Image, ScrollView } from "react-native";
 import TicketsContext from "../components/TicketsContext";
 import commonStyles from "../../../styles/commonStyles";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -8,13 +8,33 @@ import Icon from "react-native-vector-icons/Ionicons";
 import avatarteste from "../../avatarteste";
 
 export default ({ route, navigation }) => {
-  const [evento, setEvento] = useState(
-    route.params ? route.params : { ...evento, favorito: false }
-  );
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener("focus", () => {
+  //     setEvento({ evento: [] });
+  //   });
+  //   return unsubscribe;
+  // }, [navigation]);
+  const [evento, setEvento] = useState(route.params ? route.params : {});
   const { dispatch } = useContext(TicketsContext);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
+  const validaDados = () => {
+    let valida = 0;
+
+    if (
+      evento.name == "" ||
+      evento.local == "" ||
+      evento.data == null ||
+      evento.hora == null ||
+      evento.qt == 0
+    ) {
+      alert("Preencha todos os campos!");
+    } else {
+      valida = 1;
+    }
+    return valida;
+  };
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -50,20 +70,6 @@ export default ({ route, navigation }) => {
   return (
     <View style={commonStyles.container}>
       <Card containerStyle={commonStyles.edit_card_style}>
-        <Text style={commonStyles.edit_titles}>Avatar:</Text>
-        <View style={commonStyles.image_container}>
-          {avatarteste.map((avatar, index) => (
-            <Image
-              style={commonStyles.avatar_image}
-              key={index}
-              source={{ uri: avatar }}
-            ></Image>
-          ))}
-          {/* <Image
-          style={commonStyles.avatar_image}
-          source={{ uri: avatar }}
-        ></Image> */}
-        </View>
         <View
           style={{
             alignItems: "center",
@@ -150,23 +156,8 @@ export default ({ route, navigation }) => {
         >
           <View
             style={{
-              flexDirection: "column",
-              alignItems: "left",
-            }}
-          >
-            {/* <Text style={commonStyles.edit_titles}>Preço</Text> */}
-            <TextInput
-              style={commonStyles.tiny_input}
-              onChangeText={(valor) => setEvento({ ...evento, valor })}
-              placeholder="R$ Preço"
-              placeholderTextColor={"rgba(52, 52, 52, 0.8)"}
-              value={evento.valor}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: "column",
-              alignItems: "left",
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
             <TextInput
@@ -174,26 +165,18 @@ export default ({ route, navigation }) => {
               onChangeText={(qt) => setEvento({ ...evento, qt })}
               placeholder="nº Ingressos"
               placeholderTextColor={"rgba(52, 52, 52, 0.8)"}
+              inputMode="numeric"
               value={evento.qt}
             />
+            <Text style={{ ...commonStyles.edit_titles, marginRight: 15 }}>
+              Favorito:
+            </Text>
+            <Switch
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={evento.favorito}
+            ></Switch>
           </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            padding: 10,
-          }}
-        >
-          <Text style={{ ...commonStyles.edit_titles, marginRight: 15 }}>
-            Favorito:
-          </Text>
-          <Switch
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={evento.favorito}
-          ></Switch>
         </View>
         <View
           style={{
@@ -205,11 +188,14 @@ export default ({ route, navigation }) => {
             style={commonStyles.big_button}
             type="clear"
             onPress={() => {
-              dispatch({
-                type: evento.id ? "updateEvento" : "criaEvento",
-                payload: evento,
-              });
-              navigation.goBack();
+              {
+                validaDados() &&
+                  (dispatch({
+                    type: evento.id ? "updateEvento" : "criaEvento",
+                    payload: evento,
+                  }),
+                  navigation.goBack());
+              }
             }}
           >
             <Text style={commonStyles.button_titles}>Confirmar</Text>

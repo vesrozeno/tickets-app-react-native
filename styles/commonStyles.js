@@ -32,7 +32,7 @@ export default {
   card_style: {
     borderRadius: 20,
     padding: 10,
-    backgroundColor: "#4D4848",
+    backgroundColor: "#696767",
     borderWidth: 0,
   },
   list_item_style: {
@@ -43,13 +43,25 @@ export default {
   },
   edit_card_style: {
     borderRadius: 20,
-    height: 480,
+    height: "420",
+    backgroundColor: "#696767",
+    borderWidth: 0,
+  },
+  list_edit_card_styles: {
+    borderRadius: 20,
+    height: "100%",
     backgroundColor: "#696767",
     borderWidth: 0,
   },
   card_titles: {
     color: "white",
     fontSize: 23,
+    fontWeight: "bold",
+  },
+  fav_card_titles: {
+    color: "yellow",
+    fontSize: 23,
+    fontStyle: "italic",
     fontWeight: "bold",
   },
   card_subtitles: {
@@ -67,10 +79,20 @@ export default {
     backgroundColor: "#0011A6",
     margin: 2,
   },
+  tiny_round_buttons: {
+    borderRadius: 100,
+    width: 40,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#0011A6",
+    margin: 2,
+  },
+
   reserva_button: {
     margin: 2,
     borderRadius: 20,
-    width: 125,
+    width: 160,
     height: 50,
     justifyContent: "center",
     alignItems: "center",
@@ -92,15 +114,14 @@ export default {
     padding: 10,
   },
   avatar_image: {
-    width: 70,
-    height: 70,
+    borderRadius: 20,
+    marginBottom: 10,
   },
   avatar_image_display: {
     width: 70,
     height: 70,
     marginRight: 10,
-    borderWidth: 3,
-    borderColor: "white",
+    borderRadius: 10,
   },
   edit_titles: {
     fontStyle: "italic",

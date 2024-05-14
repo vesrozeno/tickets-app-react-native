@@ -1,16 +1,30 @@
 import React, { useState, useContext } from "react";
-import { Text, View, StyleSheet, Alert, TextInput } from "react-native";
-import { Button } from "@rneui/themed";
+import { Text, View, TextInput } from "react-native";
+import { Button, Card } from "@rneui/themed";
 import Icon from "react-native-vector-icons/Ionicons";
 import TicketsContext from "./TicketsContext";
 import commonStyles from "../../../styles/commonStyles";
 
 export default ({ evento, setEvento, navigation }) => {
+  //States e Context
   const [qt, setQt] = useState(0);
   const [nome, setNome] = useState("");
   const { dispatch } = useContext(TicketsContext);
 
-  const inc = () => {
+  //Função para validar dados
+  const validaDados = () => {
+    let valida = 0;
+
+    if (nome == "" || qt == 0) {
+      alert("Preencha todos os campos!");
+    } else {
+      valida = 1;
+    }
+    return valida;
+  };
+
+  //Funções iteradoras
+  const mais = () => {
     if (evento.qt > 0) {
       setQt(qt + 1);
       setEvento({
@@ -19,7 +33,7 @@ export default ({ evento, setEvento, navigation }) => {
       });
     }
   };
-  const dec = () => {
+  const menos = () => {
     if (qt > 0) {
       setQt(qt - 1);
       setEvento({
@@ -29,15 +43,14 @@ export default ({ evento, setEvento, navigation }) => {
     }
   };
 
+  //Função que realiza a reserva
   const handleReserva = () => {
-    const novaReserva = { cliente: nome, ings: qt };
-    const novasReservas = [...evento.reservas, novaReserva];
-    setEvento({ ...evento, reservas: evento.reservas.push(novasReservas) });
+    const reserva = { cliente: nome, ings: qt };
+    setEvento({ ...evento, reservas: evento.reservas.push(reserva) });
     dispatch({
       type: "updateEvento",
       payload: evento,
     });
-    console.warn(evento.reservas);
     navigation.goBack();
   };
 
@@ -50,7 +63,11 @@ export default ({ evento, setEvento, navigation }) => {
         onChangeText={(nome) => setNome(nome)}
         value={nome}
       />
-
+      <View style={{ alignItems: "center", marginTop: 10 }}>
+        <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>
+          Quantidade de ingressos
+        </Text>
+      </View>
       <View
         style={{
           flexDirection: "row",
@@ -61,7 +78,7 @@ export default ({ evento, setEvento, navigation }) => {
       >
         <Button
           icon={<Icon name="remove-circle" color="#fff" size={28} />}
-          onPress={dec}
+          onPress={menos}
           type="clear"
         />
         <Text style={{ fontSize: 35, textAlign: "center", color: "#fff" }}>
@@ -70,14 +87,39 @@ export default ({ evento, setEvento, navigation }) => {
 
         <Button
           icon={<Icon name="add-circle" color="#fff" size={28} />}
-          onPress={inc}
+          onPress={mais}
           type="clear"
         />
       </View>
-
-      <Button type="solid" onPress={handleReserva} buttonColor="#fff">
-        RESERVAR
-      </Button>
+      <Card.Divider></Card.Divider>
+      <View
+        style={{
+          flexDirection: "row-reverse",
+          justifyContent: "space-between",
+        }}
+      >
+        <Button
+          style={commonStyles.big_button}
+          type="clear"
+          onPress={() => {
+            {
+              validaDados() && handleReserva();
+            }
+          }}
+        >
+          <Text style={commonStyles.button_titles}>Confirmar</Text>
+        </Button>
+        <Button
+          style={commonStyles.big_button}
+          type="clear"
+          title="Cancelar"
+          onPress={() => {
+            navigation.goBack();
+          }}
+        >
+          <Text style={commonStyles.button_titles}>Cancelar</Text>
+        </Button>
+      </View>
     </View>
   );
 };
