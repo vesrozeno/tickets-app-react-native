@@ -6,10 +6,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 export default (props) => {
   return (
-    <Card containerStyle={commonStyles.card_style}>
+    <Card
+      containerStyle={
+        props.evento.favorito
+          ? commonStyles.fav_card_style
+          : commonStyles.card_style
+      }
+    >
       <View style={commonStyles.card_container}>
         <Card.Image
-          source={{ uri: evento.avatar }}
+          source={{ uri: props.evento.avatar }}
           containerStyle={commonStyles.avatar_image}
         />
         <View>
@@ -28,13 +34,7 @@ export default (props) => {
                   alignItems: "center",
                 }}
               >
-                <Text
-                  style={
-                    props.evento.favorito
-                      ? commonStyles.fav_card_titles
-                      : commonStyles.card_titles
-                  }
-                >
+                <Text style={commonStyles.card_titles}>
                   {props.evento.name}
                 </Text>
                 {props.evento.favorito && (

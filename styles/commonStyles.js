@@ -35,6 +35,13 @@ export default {
     backgroundColor: "#696767",
     borderWidth: 0,
   },
+  fav_card_style: {
+    borderRadius: 20,
+    padding: 10,
+    backgroundColor: "#696767",
+    borderWidth: 2,
+    borderColor: "#0011A6",
+  },
   list_item_style: {
     backgroundColor: "#696767",
     borderRadius: 15,
@@ -56,12 +63,6 @@ export default {
   card_titles: {
     color: "white",
     fontSize: 23,
-    fontWeight: "bold",
-  },
-  fav_card_titles: {
-    color: "yellow",
-    fontSize: 23,
-    fontStyle: "italic",
     fontWeight: "bold",
   },
   card_subtitles: {

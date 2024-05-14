@@ -19,9 +19,9 @@ const actions = {
     const updatedEventos = state.eventos.filter((u) => u.id !== user.id);
     saveEventos(updatedEventos);
     return {
-      ...state, //opcional no caso de 1 estado, se tiver mais estados precisa clonalos com essa linha
+      ...state,
       eventos: updatedEventos,
-    }; //estado é evoluido
+    };
   },
 
   favoritaEvento(state, action) {
@@ -44,7 +44,7 @@ const actions = {
     user.id = Math.random();
     user.reservas = [];
     user.favorito = false;
-    user.avatar = covers[Math.floor(Math.random() * avatars.length)];
+    user.avatar = covers[Math.floor(Math.random() * covers.length)];
     const updatedEventos = [...state.eventos, user];
     saveEventos(updatedEventos);
     return {
@@ -77,7 +77,7 @@ async function saveEventos(eventos) {
   try {
     await AsyncStorage.setItem("eventos", JSON.stringify(eventos));
   } catch (error) {
-    console.error("Erro ao salvar os usuários no AsyncStorage", error);
+    console.error("Erro ao salvar os eventos no AsyncStorage", error);
   }
 }
 async function loadEventos() {
@@ -85,7 +85,7 @@ async function loadEventos() {
     const eventos = await AsyncStorage.getItem("eventos");
     return { eventos: eventos ? JSON.parse(eventos) : [] };
   } catch (error) {
-    console.error("Erro ao carregar os usuários do AsyncStorage", error);
+    console.error("Erro ao carregar os eventos do AsyncStorage", error);
     return { eventos: [] };
   }
 }
@@ -93,9 +93,9 @@ async function loadEventos() {
 export async function deleteEventos() {
   try {
     await AsyncStorage.removeItem("eventos");
-    console.log("Usuários removidos com sucesso");
+    console.log("Eventos removidos com sucesso");
   } catch (error) {
-    console.error("Erro ao remover os usuários do AsyncStorage");
+    console.error("Erro ao remover os eventos do AsyncStorage");
   }
 }
 export const EventosProvider = (props) => {
@@ -105,9 +105,6 @@ export const EventosProvider = (props) => {
       if (loadedEventos.eventos.length !== 0) {
         dispatch({ type: "carregaEventos", payload: loadedEventos });
       }
-      //   else {
-      //     dispatch({ type: "gerarRandom", payload: eventos });
-      //   }
     }
     fetchData();
   }, []);

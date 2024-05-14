@@ -19,7 +19,7 @@ export default (props) => {
             >
               <Image
                 containerStyle={commonStyles.avatar_image_display}
-                source={{ uri: evento.avatar }}
+                source={{ uri: props.evento.avatar }}
               />
               <View>
                 <Text style={commonStyles.card_titles}>

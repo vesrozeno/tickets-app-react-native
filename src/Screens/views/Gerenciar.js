@@ -20,7 +20,7 @@ export default (props) => {
     event.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  function getUsersItems({ item: evento }) {
+  function getEventosItems({ item: evento }) {
     return <BigCard evento={evento} getActions={getActions}></BigCard>;
   }
 
@@ -64,7 +64,7 @@ export default (props) => {
   }
 
   function confirmUserDeletion(evento) {
-    Alert.alert("Excluir usuário", "Deseja excluir o usuário?", [
+    Alert.alert("Excluir evento", "Deseja excluir o evento?", [
       {
         text: "Sim",
         onPress() {
@@ -116,9 +116,9 @@ export default (props) => {
           round={true}
           containerStyle={{
             backgroundColor: "transparent",
-            borderWidth: 0, //no effect
-            borderTopWidth: 0, //works
-            borderBottomWidth: 0, //works
+            borderWidth: 0,
+            borderTopWidth: 0,
+            borderBottomWidth: 0,
           }}
           inputContainerStyle={{
             width: 250,
@@ -138,7 +138,7 @@ export default (props) => {
       <FlatList
         keyExtractor={(evento) => evento.id.toString()}
         data={filteredEvents}
-        renderItem={getUsersItems}
+        renderItem={getEventosItems}
       />
     </View>
   );

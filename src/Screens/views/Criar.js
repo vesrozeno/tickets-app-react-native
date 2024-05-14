@@ -1,24 +1,18 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Card, Switch } from "@rneui/themed";
-import { TextInput, View, Text, Image, ScrollView } from "react-native";
+import { TextInput, View, Text } from "react-native";
 import TicketsContext from "../components/TicketsContext";
 import commonStyles from "../../../styles/commonStyles";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Icon from "react-native-vector-icons/Ionicons";
-import avatarteste from "../../avatarteste";
 
 export default ({ route, navigation }) => {
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener("focus", () => {
-  //     setEvento({ evento: [] });
-  //   });
-  //   return unsubscribe;
-  // }, [navigation]);
   const [evento, setEvento] = useState(route.params ? route.params : {});
   const { dispatch } = useContext(TicketsContext);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
+  //Valida os dados
   const validaDados = () => {
     let valida = 0;
 
@@ -35,6 +29,7 @@ export default ({ route, navigation }) => {
     }
     return valida;
   };
+  //DateTime Picker
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -63,6 +58,7 @@ export default ({ route, navigation }) => {
     hideTimePicker();
   };
 
+  //Switch
   const toggleSwitch = () => {
     setEvento({ ...evento, favorito: !evento.favorito });
   };
@@ -75,7 +71,6 @@ export default ({ route, navigation }) => {
             alignItems: "center",
           }}
         >
-          {/* <Text style={commonStyles.edit_titles}>Nome</Text> */}
           <TextInput
             style={commonStyles.input}
             onChangeText={(name) => setEvento({ ...evento, name })}
@@ -83,7 +78,6 @@ export default ({ route, navigation }) => {
             placeholderTextColor={"rgba(52, 52, 52, 0.8)"}
             value={evento.name}
           />
-          {/* <Text style={commonStyles.edit_titles}>Local</Text> */}
           <TextInput
             style={commonStyles.input}
             onChangeText={(local) => setEvento({ ...evento, local })}

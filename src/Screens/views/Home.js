@@ -13,7 +13,7 @@ export default (props) => {
   const otherEvents = state.eventos.filter((evento) => !evento.favorito);
   const mergedEvents = [...favoriteEvents, ...otherEvents];
 
-  function getUsersItems({ item: evento }) {
+  function getEventosItems({ item: evento }) {
     return <BigCard evento={evento} getActions={getActions}></BigCard>;
   }
 
@@ -44,7 +44,7 @@ export default (props) => {
       <FlatList
         keyExtractor={(evento) => evento.id.toString()}
         data={mergedEvents}
-        renderItem={getUsersItems}
+        renderItem={getEventosItems}
       />
     </View>
   );
