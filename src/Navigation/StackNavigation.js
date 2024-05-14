@@ -11,9 +11,9 @@ import Status from "../Screens/views/Status";
 
 const Stack = createNativeStackNavigator();
 
-export default (props) => (
+export default () => (
   <Stack.Navigator
-    initialRouteName="Home" // Controle de rota inicial
+    initialRouteName="Home"
     screenOptions={{ headerShown: false }}
   >
     <Stack.Screen name="Home" component={HomeNavigationTabs} />

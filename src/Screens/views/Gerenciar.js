@@ -1,10 +1,9 @@
 import commonStyles from "../../../styles/commonStyles";
 import React, { useContext, useState } from "react";
 import { Alert, FlatList, Text, View } from "react-native";
-import { ListItem, Avatar, Button, Card, SearchBar } from "@rneui/themed";
+import { Button, SearchBar } from "@rneui/themed";
 import Icon from "react-native-vector-icons/Ionicons";
 import TicketsContext from "../components/TicketsContext";
-import avatar from "../../avatar";
 import BigCard from "../components/BigCard";
 
 export default (props) => {

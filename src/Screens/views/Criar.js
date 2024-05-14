@@ -57,12 +57,6 @@ export default ({ route, navigation }) => {
     setEvento({ ...evento, hora });
     hideTimePicker();
   };
-
-  //Switch
-  const toggleSwitch = () => {
-    setEvento({ ...evento, favorito: !evento.favorito });
-  };
-
   return (
     <View style={commonStyles.container}>
       <Card containerStyle={commonStyles.edit_card_style}>
@@ -150,7 +144,7 @@ export default ({ route, navigation }) => {
         >
           <View
             style={{
-              flexDirection: "row",
+              flexDirection: "row-reverse",
               alignItems: "center",
             }}
           >
@@ -163,18 +157,13 @@ export default ({ route, navigation }) => {
               value={evento.qt}
             />
             <Text style={{ ...commonStyles.edit_titles, marginRight: 15 }}>
-              Favorito:
+              Ing. disponíveis:
             </Text>
-            <Switch
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={evento.favorito}
-            ></Switch>
           </View>
         </View>
         <View
           style={{
-            flexDirection: "row",
+            flexDirection: "row-reverse",
             justifyContent: "space-between",
           }}
         >

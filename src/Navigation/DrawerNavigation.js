@@ -5,7 +5,7 @@ import StackNavigation from "./StackNavigation";
 
 const Drawer = createDrawerNavigator();
 
-export default (props) => (
+export default () => (
   <Drawer.Navigator
     screenOptions={{
       headerShown: false,
