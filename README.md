@@ -12,10 +12,12 @@ O armazenamento dos dados foi feito utilizando AsyncStorage
 
 ## Telas
 
-<img src="images/IMG_2015.PNG" width="200"/>
-<img src="images/IMG_2016.PNG" width="200"/>
-<img src="images/IMG_2019.PNG" width="200"/>
-<img src="images/IMG_2021.PNG" width="200"/>
-<img src="images/IMG_2025.PNG" width="200"/>
-<img src="images/IMG_2028.PNG" width="200"/>
-<img src="images/IMG_2029.PNG" width="200"/>
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+  <img src="images/IMG_2015.PNG" width="200"/>
+  <img src="images/IMG_2016.PNG" width="200"/>
+  <img src="images/IMG_2019.PNG" width="200"/>
+  <img src="images/IMG_2021.PNG" width="200"/>
+  <img src="images/IMG_2025.PNG" width="200"/>
+  <img src="images/IMG_2028.PNG" width="200"/>
+  <img src="images/IMG_2029.PNG" width="200"/>
+</div>
